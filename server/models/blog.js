@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 mongoose.Promise = global.Promise;
-const causeSchema = new mongoose.Schema({
+const blogSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   title: {
     type: String,
@@ -14,9 +14,9 @@ const causeSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  user_id: {
-    type: String,
-    required: true,
-  },
+  // user_id: {
+  //   type: String,
+  //   required: true,
+  // },
 });
-export default mongoose.model('Cause', causeSchema);
+export default mongoose.model('Blog', blogSchema);

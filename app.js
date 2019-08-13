@@ -3,11 +3,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import logger from 'morgan';
+import mainRoutes from './server/routes/main';
 // set up dependencies
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
+app.use('/api/', mainRoutes);
+
 // set up mongoose
 mongoose.connect('mongodb+srv://davidrzuluaga:Ilikethep00l@cluster0-knyoc.mongodb.net/test?retryWrites=true&w=majority')
   .then(()=> {
@@ -24,6 +27,7 @@ app.get('/', (req, res) => {
     message: 'Welcome to Project Support',
   });
 });
+
 app.listen(port, () => {
   console.log(`Our server is running on port ${port}`);
 });
