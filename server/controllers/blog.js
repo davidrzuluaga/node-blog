@@ -7,8 +7,9 @@ export function createBlog(req, res) {
     title: req.body.title,
     description: req.body.description,
     picture: req.body.picture,
-    user_id: req.body.user_id
+    user: req.body.user
   });
+  console.log(req.body)
   return blog
   .save()
   .then((newBlog) => {
