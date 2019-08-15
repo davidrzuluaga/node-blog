@@ -47,3 +47,40 @@ export function getAllBlog(req, res){
     });
   });
 };
+
+export function getUsersBlog(req, res){
+  Blog.find({user: req.params.id})
+  //.select('_id title description')
+  .then((usersBlog) => {
+    return res.status(200).json({
+      success: true,
+      message: `A list of user: ${req.params.id} blog entries`,
+      Blog: usersBlog,
+    });
+  })
+  .catch((err) => {
+    res.status(500).json({
+      success: false,
+      message: 'Server error. Please try again.',
+      error: err.message,
+    });
+  });
+};
+
+export function deleteEntry(req, res){
+  Blog.findByIdAndRemove(req.params.id)
+  //.select('_id title description')
+  .then((usersBlog) => {
+    return res.status(200).json({
+      success: true,
+      message: `Deleted successfully`
+    });
+  })
+  .catch((err) => {
+    res.status(500).json({
+      success: false,
+      message: 'Server error. Please try again.',
+      error: err.message,
+    });
+  });
+};
