@@ -17,7 +17,7 @@ const errorHandler = require('errorhandler');
 
 // const isProduction = process.env.NODE_ENV === 'production';
 // set up port
-const port = 3000;
+const port = process.env.PORT || 5000;
 // set up dependencies
 const app = express();
 app.use(bodyParser.json());
