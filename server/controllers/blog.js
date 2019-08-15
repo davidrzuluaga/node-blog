@@ -7,9 +7,10 @@ export function createBlog(req, res) {
     title: req.body.title,
     description: req.body.description,
     picture: req.body.picture,
-    user: req.body.user
+    user: req.body.user,
+    date: new Date()
   });
-  console.log(req.body)
+  
   return blog
   .save()
   .then((newBlog) => {
@@ -30,7 +31,7 @@ export function createBlog(req, res) {
 
 export function getAllBlog(req, res){
   Blog.find()
-  .select('_id title description')
+  //.select('_id title description')
   .then((allBlog) => {
     return res.status(200).json({
       success: true,

@@ -4,12 +4,12 @@ const router = require('express').Router();
 const auth = require('./auth');
 import Users from '../models/Users';
 
-router.get('/test', auth.optional, (req, res) => {
+router.get('/test', auth.required, (req, res) => {
   res.status(200).json({
     message: 'Welcome user test',
   });
 });
-//POST new user route (optional, everyone has access)
+
 router.post('/', auth.optional, (req, res, next) => {
   const { body: { user } } = req;
 
@@ -28,25 +28,37 @@ router.post('/', auth.optional, (req, res, next) => {
       },
     });
   }
-  console.log(user)
   
-  const finalUser = new Users(user);
+  async function registerUser() {
+    let userexist = await Users.findOne({email: user.email})
+    
+    if (!userexist) {
+      const finalUser = new Users(user);
+  
+      finalUser.setPassword(user.password);
+  
+      return finalUser
+      .save()
+      .then(() => res.json({ user: finalUser.toAuthJSON() }))
+      .catch((error) => {
+        res.status(500).json({
+          success: false,
+          message: 'Server error. Please try again.',
+          error: error.message,
+        });
+      });
+    } else {
+      res.status(402).json({
+        errors: {
+          email: 'Email is in use',
+        },
+      });
+    }
+  }
+  registerUser()
 
-  finalUser.setPassword(user.password);
-
-  return finalUser
-  .save()
-  .then(() => res.json({ user: finalUser.toAuthJSON() }))
-  .catch((error) => {
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Please try again.',
-      error: error.message,
-    });
-  });
 });
 
-//POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
   const { body: { user } } = req;
 
@@ -78,11 +90,10 @@ router.post('/login', auth.optional, (req, res, next) => {
       return res.json({ user: user.toAuthJSON() });
     }
 
-    return status(400).info;
+    return res.status(401).json({status: "wrong credentials"});
   })(req, res, next);
 });
 
-//GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req;
 

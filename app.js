@@ -31,7 +31,6 @@ app.use('/api/', mainRoutes);
 //   app.use(errorHandler());
 // }
 
-// set up mongoose
 mongoose.connect('mongodb+srv://davidrzuluaga:Ilikethep00l@cluster0-knyoc.mongodb.net/test?retryWrites=true&w=majority')
 .then(()=> {
   console.log('Database connected');
