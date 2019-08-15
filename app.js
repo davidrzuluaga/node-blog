@@ -32,7 +32,7 @@ app.use('/api/', mainRoutes);
 //   app.use(errorHandler());
 // }
 
-mongoose.connect(process.env.DB_CONN)
+mongoose.connect(process.env.DB_CONN || 'mongodb+srv://davidrzuluaga:Ilikethep00l@cluster0-knyoc.mongodb.net/test?retryWrites=true&w=majority')
 .then(()=> {
   console.log('Database connected');
 })
