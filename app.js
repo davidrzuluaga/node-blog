@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import logger from 'morgan';
 import mainRoutes from './server/routes/main';
 import userRoutes from './server/routes/users';
+require('dotenv').config();
 
 require('./server/models/Users');
 require('./config/passport');
@@ -31,7 +32,7 @@ app.use('/api/', mainRoutes);
 //   app.use(errorHandler());
 // }
 
-mongoose.connect('mongodb+srv://davidrzuluaga:Ilikethep00l@cluster0-knyoc.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect(process.env.DB_CONN)
 .then(()=> {
   console.log('Database connected');
 })
