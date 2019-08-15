@@ -27,3 +27,7 @@ get -> localhost:5000/api/blog/:id //use this to get all blog entries from a spe
 delete -> localhost:5000/api/blog/:id //use this to delete a specific blog entry
 post -> localhost:5000/api/blog/:id //use this to create a new blog entry
 ```
+## Notes
+
+* Check https://github.com/davidrzuluaga/react-blog/ that compliments with the front-end of this repo
+* Functional version of this repo  https://node-blog-api-app.herokuapp.com/
